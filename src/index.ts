@@ -1,3 +1,3 @@
-import { createLogger } from './simpleLogger';
+import { createSimpleLogger } from './simpleLogger';
 
-export default createLogger;
+export default createSimpleLogger;

@@ -2,9 +2,11 @@
 
 > Simple universal logger for node/browser, with prefix, time and colors
 
-This simple utility [is <10kb](https://bundlephobia.com/result?p=@unly/simple-logger@1.0.0-beta4) and is optimised to disable all logging in production, display log time, line of origin, prefix and sane colors on the server console.
+This simple utility [is <10kb](https://bundlephobia.com/result?p=@unly/simple-logger@1.0.0-beta4) and is optimised to disable all logging in production, display
+log time, line of origin, prefix and sane colors on the server console.
 
-It is tree-shacked, and **should be <1Kb on the browser** (most of the package size is due to [`chalk`](https://github.com/chalk/chalk/)) because it's only imported when running on the server.
+It is tree-shacked, and **should be <1Kb on the browser** (most of the package size is due to [`chalk`](https://github.com/chalk/chalk/)) because it's only
+imported when running on the server.
 
 Also, it has **the same API** as the `console` native object.
 
@@ -13,13 +15,15 @@ Also, it has **the same API** as the `console` native object.
 ## Usage
 
 ```ts
-import createLogger from '@unly/simple-logger';
+import createSimpleLogger from '@unly/simple-logger';
 
-const logger = createLogger({
+const logger = createSimpleLogger({
   prefix: 'My lib',
   shouldPrint: () => process.env.NODE_ENV !== 'production', // Only print in non-production env (default behavior)
 });
 ```
+
+> Make sure to check our [advanced examples](#advanced-examples) below!
 
 ### Example color output (server console)
 
@@ -30,6 +34,7 @@ const logger = createLogger({
 ### Recommended usage (pro tips)
 
 We recommend adapting:
+
 - The `prefix` option, using the filename, the class name, the module name, etc. to help locate the origin of the message.
 - The `shouldPrint` option to your needs. By default, it won't print anything in production environment.
 - The `colorize` option, if you want to customize the colors used on the server. See [`colorizeFallback`](./blob/main/src/simpleLogger.ts) for inspiration.
@@ -45,9 +50,10 @@ or
 ### Peer dependencies
 
 You'll also need to install those peer dependencies:
+
 - `yarn add chalk`
 
-> We decided to allow you to decide what version of chalk you want to use for greater flexibility. 
+> We decided to allow you to decide what version of chalk you want to use for greater flexibility.
 
 ## Options
 
@@ -84,15 +90,67 @@ timeFormat: Using ISO string
 
 You can define the following environment variables:
 
-- `UNLY_SIMPLE_LOGGER_ENV`: Will be used instead of `NODE_ENV`, to configure the default behavior of `shouldPrint`. 
-  - E.g: If set to `APP_STAGE`, then will compare `APP_STAGE` with `production`. 
-    If `APP_STAGE = 'staging'` (or `development`), then `shouldPrint` will print by default.
-    If `APP_STAGE = 'production'`, then `shouldPrint` will not print by default.
-    If a custom `shouldPrint` is provided, then it will ignore `UNLY_SIMPLE_LOGGER_ENV` as it won't rely on the default `shouldPrint` implementation.
-- `SIMPLE_LOGGER_SHOULD_SHOW_TIME`: Will be used to configure whether to show the time by default. 
-  - E.g: If set to `false`, then will not show the time.
+- `UNLY_SIMPLE_LOGGER_ENV`: Will be used instead of `NODE_ENV`, to configure the default behavior of `shouldPrint`.
+    - E.g: If set to `APP_STAGE`, then will compare `APP_STAGE` with `production`. If `APP_STAGE = 'staging'` (or `development`), then `shouldPrint` will print
+      by default. If `APP_STAGE = 'production'`, then `shouldPrint` will not print by default. If a custom `shouldPrint` is provided, then it will
+      ignore `UNLY_SIMPLE_LOGGER_ENV` as it won't rely on the default `shouldPrint` implementation.
+- `SIMPLE_LOGGER_SHOULD_SHOW_TIME`: Will be used to configure whether to show the time by default.
+    - E.g: If set to `false`, then will not show the time.
 
----
+## Advanced examples
+
+> Those advanced examples are taken from actual implementation in production-grade applications.
+
+### Application-wide logger
+
+If you want to define your config only once and reuse it everywhere across your app, you can write a proxy, see below:
+
+#### **`logger.ts`**
+
+```ts
+import createSimpleLogger from '@unly/simple-logger';
+import { SimpleLogger } from '@unly/simple-logger/dist/simpleLogger';
+
+/**
+ * Custom logger proxy.
+ *
+ * Customize the @unly/simple-logger library by providing app-wide default behavior.
+ *
+ * @param fileLabel
+ */
+export const createLogger = ({ fileLabel }: { fileLabel: string }): SimpleLogger => {
+  return createSimpleLogger({
+    prefix: fileLabel,
+    shouldPrint: (mode) => {
+      return process.env.NEXT_PUBLIC_APP_STAGE !== 'production';
+    },
+  });
+};
+```
+
+#### **`someFile.ts`**
+
+```ts
+import { createLogger } from '../logger';
+
+const fileLabel = 'someFile';
+const logger = createLogger({
+  fileLabel,
+});
+
+logger.warn(`Oops, a warning!`, { x: 1 })
+```
+
+---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 > This package has been created using TSDX
 

@@ -90,7 +90,7 @@ const colorizeFallback: Colorize = (mode: Omit<PrintMode, 'groupEnd'>, prefixes:
  *
  * @param options
  */
-export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
+export const createSimpleLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
   const {
     prefix,
     shouldPrint = shouldPrintFallback,
