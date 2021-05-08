@@ -44,4 +44,26 @@ describe('simpleLogger', () => {
     expect(loggerLogSpy).toHaveBeenCalledWith('Should not print'); // This is true even when nothing gets printed to the console output
     expect(loggerLogSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('should colorize log', () => {
+    const logger = createLogger({
+      prefix: 'test/simpleLogger/colorize/log',
+    });
+    const loggerLogSpy = jest.spyOn(logger, 'log');
+
+    logger.log('Should colorize log');
+    expect(loggerLogSpy).toHaveBeenCalledWith('Should colorize log'); // This is true even when nothing gets printed to the console output
+  });
+
+  // No idea how to test if the output is actually being colored
+  // This test is only useful because it's visual, but regressions won't be detected automatically
+  it('should colorize debug', () => {
+    const logger = createLogger({
+      prefix: 'test/simpleLogger/colorize/debug',
+    });
+    const loggerDebugSpy = jest.spyOn(logger, 'debug');
+
+    logger.debug('Should colorize debug');
+    expect(loggerDebugSpy).toHaveBeenCalledWith('Should colorize debug'); // This is true even when nothing gets printed to the console output
+  });
 });

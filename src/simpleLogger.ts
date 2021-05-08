@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import noop from 'lodash.noop';
 
 export type SimpleLogger = {
@@ -38,6 +39,38 @@ export const timeFormatFallback: TimeFormat = () => new Date().toISOString();
 const shouldShowTimeFallback = (): boolean => process?.env?.SIMPLE_LOGGER_SHOULD_SHOW_TIME !== 'false';
 
 /**
+ * Colorize output.
+ *
+ * Only colorize on the server, not on the browser
+ * (keep native behavior, to avoid messing with colors and complicated browser API which is different for each browser).
+ *
+ * @param mode
+ * @param prefixes
+ */
+const colorize = (mode: PrintMode, prefixes: string[]): any[] => {
+  const debug = chalk.hex('#FFA500');
+
+  if (typeof window === 'undefined') {
+    switch (mode) {
+      case 'debug':
+        return prefixes.map((prefix: string) => debug(prefix));
+      case 'error':
+        return prefixes.map((prefix: string) => chalk.red(prefix));
+      case 'group':
+        return prefixes.map((prefix: string) => chalk.blue(prefix));
+      case 'info':
+        return prefixes.map((prefix: string) => chalk.blue(prefix));
+      case 'log':
+        return prefixes.map((prefix: string) => chalk.blue(prefix));
+      case 'warn':
+        return prefixes.map((prefix: string) => chalk.blue(prefix));
+    }
+  }
+
+  return prefixes;
+};
+
+/**
  * Creates a logger object containing the same "print" API as the console object.
  *
  * Compatible with server and browser. (universal)
@@ -45,13 +78,13 @@ const shouldShowTimeFallback = (): boolean => process?.env?.SIMPLE_LOGGER_SHOULD
  * @param options
  */
 export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
-  const { prefix, shouldPrint = shouldPrintFallback, disableAutoWrapPrefix = false, showTime = shouldShowTimeFallback(), timeFormat = timeFormatFallback() } =
-    options || {};
+  const { prefix, shouldPrint = shouldPrintFallback, disableAutoWrapPrefix = false, showTime = shouldShowTimeFallback(), timeFormat = timeFormatFallback } =
+  options || {};
   const _prefix: string | undefined = disableAutoWrapPrefix || !prefix?.length ? prefix : `[${prefix}]`;
-  const prefixes = []; // Contains an array of prefixes (tags, time, etc.)
+  const prefixes: string[] = []; // Contains an array of prefixes (tags, time, etc.)
 
   if (showTime) {
-    prefixes.push(timeFormat);
+    prefixes.push(timeFormat());
   }
 
   if (_prefix) {
@@ -59,11 +92,11 @@ export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
   }
 
   return {
-    debug: shouldPrint('debug') ? console.debug.bind(console, ...prefixes) : noop,
-    error: shouldPrint('error') ? console.error.bind(console, ...prefixes) : noop,
-    group: shouldPrint('group') ? console.group.bind(console, ...prefixes) : noop,
-    info: shouldPrint('info') ? console.info.bind(console, ...prefixes) : noop,
-    log: shouldPrint('log') ? console.log.bind(console, ...prefixes) : noop,
-    warn: shouldPrint('warn') ? console.warn.bind(console, ...prefixes) : noop,
+    debug: shouldPrint('debug') ? console.debug.bind(console, ...colorize('debug', prefixes)) : noop,
+    error: shouldPrint('error') ? console.error.bind(console, ...colorize('error', prefixes)) : noop,
+    group: shouldPrint('group') ? console.group.bind(console, ...colorize('group', prefixes)) : noop,
+    info: shouldPrint('info') ? console.info.bind(console, ...colorize('info', prefixes)) : noop,
+    log: shouldPrint('log') ? console.log.bind(console, ...colorize('log', prefixes)) : noop,
+    warn: shouldPrint('warn') ? console.warn.bind(console, ...colorize('warn', prefixes)) : noop,
   };
 };

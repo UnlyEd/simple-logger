@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "@types/lodash.noop": "3.0.6",
+    "chalk": "4.1.1",
     "lodash.noop": "3.0.1"
   }
 }
