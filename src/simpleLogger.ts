@@ -79,7 +79,7 @@ const colorize = (mode: PrintMode, prefixes: string[]): any[] => {
  */
 export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
   const { prefix, shouldPrint = shouldPrintFallback, disableAutoWrapPrefix = false, showTime = shouldShowTimeFallback(), timeFormat = timeFormatFallback } =
-  options || {};
+    options || {};
   const _prefix: string | undefined = disableAutoWrapPrefix || !prefix?.length ? prefix : `[${prefix}]`;
   const prefixes: string[] = []; // Contains an array of prefixes (tags, time, etc.)
 
