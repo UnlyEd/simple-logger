@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import noop from 'lodash.noop';
 
 export type SimpleLogger = {
@@ -52,9 +51,10 @@ const shouldShowTimeFallback = (): boolean => process?.env?.SIMPLE_LOGGER_SHOULD
  * @param prefixes
  */
 const colorizeFallback: Colorize = (mode: Omit<PrintMode, 'groupEnd'>, prefixes: string[]): any[] => {
-  const orange = chalk.hex('#FFA500');
-
   if (typeof window === 'undefined') {
+    const chalk = require('chalk'); // Require chalk on the server only, should not be included in the browser bundle
+    const orange = chalk.hex('#FFA500');
+
     switch (mode) {
       case 'debug':
         return prefixes.map((prefix: string) => chalk.yellow(prefix));
