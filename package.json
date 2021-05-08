@@ -29,6 +29,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
+    "test:coverage": "tsdx test --coverage",
     "test:watch": "tsdx test --watchAll",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",

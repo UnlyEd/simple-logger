@@ -1,0 +1,40 @@
+# Summary:
+# Runs unit and coverage tests, then uploads the coverage results to the Code Climate dashboard.
+#
+# LEARN MORE AT https://unlyed.github.io/next-right-now/guides/ci-cd/
+#
+# Dependencies overview:
+# - See https://github.com/actions/setup-node https://github.com/actions/setup-node/tree/v2
+# - https://github.com/paambaati/codeclimate-action https://github.com/paambaati/codeclimate-action/tree/v2.6.0
+
+name: Update Code Climate test coverage
+
+on:
+  push:
+    branches:
+      - 'main' # Change this branch name by your CodeClimate "main" branch
+
+jobs:
+  # Configures the deployment environment, install dependencies (like node, npm, etc.) that are requirements for the upcoming jobs
+  # Ex: Necessary to run `yarn test:coverage`
+  setup-environment:
+    name: Setup deployment environment (Ubuntu 18.04 - Node 14.x)
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Installing node.js
+        uses: actions/setup-node@v2 # Used to install node environment - XXX https://github.com/actions/setup-node
+        with:
+          node-version: '14.x' # Use the same node.js version as the one Vercel's uses (currently node14.x)
+
+  run-tests-coverage:
+    name: Run tests coverage and send report to Code Climate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Installing dependencies
+        run: yarn install
+      - uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }} # XXX Define this secret in "Github repo > Settings > Secrets", you can get it from Code Climate in "Repo settings > Test coverage".
+        with:
+          coverageCommand: yarn test:coverage

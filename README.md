@@ -1,6 +1,10 @@
+<a href="https://unly.org"><img src="https://storage.googleapis.com/unly/images/ICON_UNLY.png" align="right" height="20" alt="Unly logo" title="Unly logo" /></a>
+[![Maintainability](https://api.codeclimate.com/v1/badges/61b9b07f5eab634d5743/maintainability)](https://codeclimate.com/github/UnlyEd/simple-logger/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/61b9b07f5eab634d5743/test_coverage)](https://codeclimate.com/github/UnlyEd/simple-logger/test_coverage)
+
 # Simple logger
 
-> Simple universal logger for node/browser, with prefix, time and colors
+> Simple universal and extra-light (1kB) logger for node/browser, with prefix, time and colours.
 
 This simple utility [is <1kB](https://bundlephobia.com/result?p=@unly/simple-logger) and is optimised to disable all logging in production, display
 log time, line of origin, prefix and sane colors on the server console.
