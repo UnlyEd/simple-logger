@@ -6,8 +6,8 @@
 
 > Simple universal and extra-light (1kB) logger for node/browser, with prefix, time and colours.
 
-This simple utility [is <1kB](https://bundlephobia.com/result?p=@unly/simple-logger) and is optimised to disable all logging in production, display
-log time, line of origin, prefix and sane colors on the server console.
+This simple utility [is <1kB](https://bundlephobia.com/result?p=@unly/simple-logger) and is optimised to disable all logging in production, display log time,
+line of origin, prefix and sane colors on the server console.
 
 Also, it is tree-shacked and has **the same API** as the `console` native object.
 
@@ -140,6 +140,38 @@ const logger = createLogger({
 });
 
 logger.warn(`Oops, a warning!`, { x: 1 })
+```
+
+### Silent all logs during tests (Jest)
+
+Similar to the previous example, the `createLogger` can be used to change the behaviors for tests.
+
+In the below example, the `NODE_ENV` equals `test` during tests ([when running `yarn test`](https://github.com/UnlyEd/next-right-now/blob/v2-mst-aptd-at-lcz-sty/package.json#L67)) and it makes it easy to change the behavior to use `console` instead of the `logger` in such case.
+Combined with [other configuration](https://github.com/UnlyEd/next-right-now/blob/v2-mst-aptd-at-lcz-sty/jest.setup.js#L21-L29), it allows to silent all logs when using either `console` or `logger` during tests.
+
+#### **`logger.ts`**
+
+```ts
+/**
+ * Custom logger proxy.
+ *
+ * Customize the @unly/simple-logger library by providing app-wide default behavior.
+ *
+ * @param fileLabel
+ */
+export const createLogger = ({ fileLabel }: { fileLabel: string }): SimpleLogger => {
+    // Mute logger during tests, to avoid cluttering the console
+    if (process.env.NODE_ENV === 'test') {
+      return global.muteConsole();
+    }
+
+    return createSimpleLogger({
+      prefix: fileLabel,
+      shouldPrint: (mode) => {
+        return process.env.NEXT_PUBLIC_APP_STAGE !== 'production';
+      },
+    });
+  };
 ```
 
 ---
