@@ -1,6 +1,6 @@
 {
   "name": "@unly/simple-logger",
-  "version": "1.0.0-beta8",
+  "version": "1.0.0",
   "description": "Simple universal logger for node/browser, with prefix, time and colors\n\n",
   "main": "dist/index.js",
   "repository": {
