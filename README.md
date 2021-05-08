@@ -30,6 +30,22 @@ const logger = createLogger({
 We recommend adapting:
 - The `prefix` option, using the filename, the class name, the module name, etc. to help locate the origin of the message.
 - The `shouldPrint` option to your needs. By default, it won't print anything in production environment.
+- The `colorize` option, if you want to customize the colors used on the server.
+
+## Installation
+
+`yarn add @unly/simple-logger`
+
+or
+
+`npm install @unly/simple-logger`
+
+### Peer dependencies
+
+You'll also need to install those peer dependencies:
+- `yarn add chalk`
+
+> We decided to allow you to decide what version of chalk you want to use for greater flexibility. 
 
 ## Options
 
