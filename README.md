@@ -2,7 +2,57 @@
 
 > Simple universal logger for node/browser, with prefix, time and colors
 
+## Usage
 
+```ts
+import createLogger from '@unly/simple-logger';
+
+const logger = createLogger({
+  prefix: 'My lib',
+  shouldPrint: () => process.env.NODE_ENV !== 'production', // Only print in non-production env (default behavior)
+});
+```
+
+### Recommended usage (pro tips)
+
+We recommend adapting:
+- The `prefix` option, using the filename, the class name, the module name, etc. to help locate the origin of the message.
+- The `shouldPrint` option to your needs. By default, it won't print anything in production environment.
+
+## Options
+
+Here are a few options to adapt the lib to your own needs.
+
+```ts
+export type SimpleLoggerOptions = {
+  prefix?: string;
+  disableAutoWrapPrefix?: boolean;
+  colorize?: Colorize;
+  shouldPrint?: ShouldPrint;
+  shouldShowTime?: ShouldShowTime;
+  timeFormat?: TimeFormat;
+};
+
+export type Colorize = (mode: PrintMode, prefixes: string[]) => string[];
+export type ShouldPrint = (mode: PrintMode) => boolean;
+export type ShouldShowTime = () => boolean;
+export type TimeFormat = () => string;
+```
+
+### Default options
+
+```
+prefix: None
+disableAutoWrapPrefix: `false`
+colorize: Colorize for server console only, see implementation
+shouldPrint: Prints if NODE_ENV !== 'production'
+shouldShowTime: Enabled
+timeFormat: Using ISO string
+```
+
+---
+
+> This package has been created using TSDX
 
 <details>
 <summary>TSDX User Guide</summary>
@@ -41,7 +91,8 @@ Jest tests are set up to run with `npm test` or `yarn test`.
 
 ### Bundle Analysis
 
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
+[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle
+with `npm run analyze`.
 
 #### Setup Files
 
@@ -60,7 +111,8 @@ tsconfig.json
 
 ### Rollup
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings.
+See [Optimizations](#optimizations) for details.
 
 ### TypeScript
 
@@ -77,11 +129,13 @@ Two actions are added by default:
 
 ## Optimizations
 
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of
+development-only optimizations:
 
 ```js
 // ./types/index.d.ts
-declare var __DEV__: boolean;
+declare
+var __DEV__: boolean;
 
 // inside your code...
 if (__DEV__) {
@@ -89,7 +143,8 @@ if (__DEV__) {
 }
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning)
+functions.
 
 ## Module Formats
 
@@ -99,13 +154,15 @@ The appropriate paths are configured in `package.json` and `dist/index.js` accor
 
 ## Named Exports
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React
+library.
 
 ## Including Styles
 
 There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by
+your users and run through their bundler's loader.
 
 ## Publishing to NPM
 
