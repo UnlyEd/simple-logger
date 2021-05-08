@@ -2,6 +2,12 @@
 
 > Simple universal logger for node/browser, with prefix, time and colors
 
+This simple utility [is <10kb](https://bundlephobia.com/result?p=@unly/simple-logger@1.0.0-beta4) and is optimised to disable all logging in production, display log time, line of origin, prefix and sane colors on the server console.
+
+It is tree-shacked, and **should be <1Kb on the browser** (most of the package size is due to [`chalk`](https://github.com/chalk/chalk/)) because it's only imported when running on the server.
+
+> We use it with Next.js and Vercel, and we don't need the server logs on production because we have Sentry for that, and disabling them reduces our cost.
+
 ## Usage
 
 ```ts
