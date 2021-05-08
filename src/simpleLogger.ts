@@ -29,7 +29,7 @@ export type TimeFormat = () => string;
 /**
  * By default, printing is only enabled in non-production environments.
  */
-export const shouldPrintFallback: ShouldPrint = () => process?.env?.NODE_ENV !== 'production';
+export const shouldPrintFallback: ShouldPrint = () => process.env.NODE_ENV !== 'production';
 
 /**
  * By default, displays the time as a Date ISO string.
@@ -39,7 +39,7 @@ export const timeFormatFallback: TimeFormat = () => new Date().toISOString();
 /**
  * By default, show time unless SIMPLE_LOGGER_SHOULD_SHOW_TIME has been explicitly set to "false".
  */
-const shouldShowTimeFallback = (): boolean => process?.env?.SIMPLE_LOGGER_SHOULD_SHOW_TIME !== 'false';
+const shouldShowTimeFallback = (): boolean => process.env.SIMPLE_LOGGER_SHOULD_SHOW_TIME !== 'false';
 
 /**
  * Colorize output.
