@@ -89,8 +89,7 @@ export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
     shouldShowTime = shouldShowTimeFallback,
     timeFormat = timeFormatFallback,
     colorize = colorizeFallback,
-  } =
-  options || {};
+  } = options || {};
   const _prefix: string | undefined = disableAutoWrapPrefix || !prefix?.length ? prefix : `[${prefix}]`;
   const prefixes: string[] = []; // Contains an array of prefixes (tags, time, etc.)
 
