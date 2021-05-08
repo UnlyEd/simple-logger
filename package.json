@@ -1,14 +1,27 @@
 {
   "name": "@unly/simple-logger",
-  "author": "UnlyEd",
-  "version": "0.1.0",
-  "license": "MIT",
+  "version": "1.0.0-beta1",
+  "description": "Simple universal logger for node/browser, with prefix, time and colors\n\n",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnlyEd/simple-logger.git"
+  },
+  "author": "unlyEd",
+  "license": "MIT",
   "typings": "dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/UnlyEd/simple-logger/issues"
+  },
+  "homepage": "https://github.com/UnlyEd/simple-logger",
   "files": [
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "engines": {
     "node": ">=10"
   },
@@ -20,10 +33,10 @@
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
     "prepare": "tsdx build",
+    "release": "yarn publish",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -46,17 +59,18 @@
       "limit": "10 KB"
     }
   ],
+  "dependencies": {
+    "chalk": "4.1.1",
+    "lodash.noop": "3.0.1"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "4.10.2",
+    "@types/lodash.noop": "3.0.6",
     "husky": "6.0.0",
     "size-limit": "4.10.2",
     "tsdx": "0.14.1",
     "tslib": "2.2.0",
     "typescript": "4.2.4"
   },
-  "dependencies": {
-    "@types/lodash.noop": "3.0.6",
-    "chalk": "4.1.1",
-    "lodash.noop": "3.0.1"
-  }
+  "peerDependencies": {}
 }
