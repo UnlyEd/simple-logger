@@ -111,6 +111,7 @@ export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
   }
 
   return {
+    ...console, // Provides the same API as the native "console" object, while overwriting a few specific methods below
     debug: shouldPrint('debug') ? console.debug.bind(console, ...colorize('debug', prefixes)) : noop,
     error: shouldPrint('error') ? console.error.bind(console, ...colorize('error', prefixes)) : noop,
     group: shouldPrint('group') ? console.group.bind(console, ...colorize('group', prefixes)) : noop,

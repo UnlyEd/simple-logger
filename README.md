@@ -6,6 +6,8 @@ This simple utility [is <10kb](https://bundlephobia.com/result?p=@unly/simple-lo
 
 It is tree-shacked, and **should be <1Kb on the browser** (most of the package size is due to [`chalk`](https://github.com/chalk/chalk/)) because it's only imported when running on the server.
 
+Also, it has **the same API** as the `console` native object.
+
 > We use it with Next.js and Vercel, and we don't need the server logs on production because we have Sentry for that, and disabling them reduces our cost.
 
 ## Usage
