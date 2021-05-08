@@ -7,7 +7,7 @@ export type SimpleLogger = {
   info: any;
   log: any;
   warn: any;
-}
+};
 
 export type PrintMode = 'log' | 'info' | 'debug' | 'warn' | 'error' | 'group';
 
@@ -17,7 +17,7 @@ export type SimpleLoggerOptions = {
   disableAutoWrapPrefix?: boolean;
   showTime?: boolean;
   timeFormat?: TimeFormat;
-}
+};
 
 export type ShouldPrint = (mode: PrintMode) => boolean;
 export type TimeFormat = () => string;
@@ -30,7 +30,7 @@ export const shouldPrintFallback: ShouldPrint = () => process?.env?.NODE_ENV !==
 /**
  * By default, displays the time as a Date ISO string.
  */
-export const timeFormatFallback: TimeFormat = () => (new Date()).toISOString();
+export const timeFormatFallback: TimeFormat = () => new Date().toISOString();
 
 /**
  * By default, show time unless SIMPLE_LOGGER_SHOULD_SHOW_TIME has been explicitly set to "false".
@@ -45,14 +45,9 @@ const shouldShowTimeFallback = (): boolean => process?.env?.SIMPLE_LOGGER_SHOULD
  * @param options
  */
 export const createLogger = (options?: SimpleLoggerOptions): SimpleLogger => {
-  const {
-    prefix,
-    shouldPrint = shouldPrintFallback,
-    disableAutoWrapPrefix = false,
-    showTime = shouldShowTimeFallback(),
-    timeFormat = timeFormatFallback(),
-  } = options || {};
-  const _prefix: string | undefined = (disableAutoWrapPrefix || !prefix?.length) ? prefix : `[${prefix}]`;
+  const { prefix, shouldPrint = shouldPrintFallback, disableAutoWrapPrefix = false, showTime = shouldShowTimeFallback(), timeFormat = timeFormatFallback() } =
+    options || {};
+  const _prefix: string | undefined = disableAutoWrapPrefix || !prefix?.length ? prefix : `[${prefix}]`;
   const prefixes = []; // Contains an array of prefixes (tags, time, etc.)
 
   if (showTime) {

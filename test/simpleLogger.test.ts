@@ -3,7 +3,7 @@ import { createLogger } from '../src/simpleLogger';
 const originalLog = console.log;
 
 describe('simpleLogger', () => {
-  afterEach(() => (console.log = originalLog))
+  afterEach(() => (console.log = originalLog));
 
   it('should have the same logging methods as the "console" object', () => {
     const logger = createLogger();
