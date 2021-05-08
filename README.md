@@ -1,9 +1,12 @@
 # Simple logger
 
-TODO
+> Simple universal logger for node/browser, with prefix, time and colors
+
+
 
 <details>
-  <summary>TSDX User Guide</summary>
+<summary>TSDX User Guide</summary>
+
 # TSDX User Guide
 
 Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
