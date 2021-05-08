@@ -32,7 +32,7 @@ const logger = createLogger({
 We recommend adapting:
 - The `prefix` option, using the filename, the class name, the module name, etc. to help locate the origin of the message.
 - The `shouldPrint` option to your needs. By default, it won't print anything in production environment.
-- The `colorize` option, if you want to customize the colors used on the server.
+- The `colorize` option, if you want to customize the colors used on the server. See [`colorizeFallback`](./blob/main/src/simpleLogger.ts) for inspiration.
 
 ## Installation
 
