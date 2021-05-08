@@ -13,6 +13,12 @@ const logger = createLogger({
 });
 ```
 
+### Example color output (server console)
+
+![image](https://user-images.githubusercontent.com/3807458/117548250-3e016980-b034-11eb-94fb-8eb72016c558.png)
+
+> This is an example of the default color behaviour (see `scripts/show-colors.js`).
+
 ### Recommended usage (pro tips)
 
 We recommend adapting:
