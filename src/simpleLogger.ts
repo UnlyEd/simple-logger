@@ -29,12 +29,12 @@ export type TimeFormat = () => string;
 /**
  * By default, printing is only enabled in non-production environments.
  *
- * This behavior can be customized by defining a SIMPLE_LOGGER_ENV which will be matched against "production".
+ * This behavior can be customized by defining a UNLY_SIMPLE_LOGGER_ENV which will be matched against "production".
  * This is useful when dealing with multi stages (dev, staging, production) and you want to enable logs on all stages but not for production.
  */
 export const shouldPrintFallback: ShouldPrint = (): boolean => {
-  if (process.env.SIMPLE_LOGGER_ENV) {
-    return process.env.SIMPLE_LOGGER_ENV !== 'production';
+  if (process.env.UNLY_SIMPLE_LOGGER_ENV) {
+    return process.env.UNLY_SIMPLE_LOGGER_ENV !== 'production';
   }
 
   return process.env.NODE_ENV !== 'production';
