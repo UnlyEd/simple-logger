@@ -50,6 +50,18 @@ shouldShowTime: Enabled
 timeFormat: Using ISO string
 ```
 
+## Advanced configuration
+
+You can define the following environment variables:
+
+- `SIMPLE_LOGGER_ENV`: Will be used instead of `NODE_ENV`, to configure the default behavior of `shouldPrint`. 
+  - E.g: If set to `APP_STAGE`, then will compare `APP_STAGE` with `production`. 
+    If `APP_STAGE = 'staging'` (or `development`), then `shouldPrint` will print by default.
+    If `APP_STAGE = 'production'`, then `shouldPrint` will not print by default.
+    If a custom `shouldPrint` is provided, then it will ignore `SIMPLE_LOGGER_ENV` as it won't rely on the default `shouldPrint` implementation.
+- `SIMPLE_LOGGER_SHOULD_SHOW_TIME`: Will be used to configure whether to show the time by default. 
+  - E.g: If set to `false`, then will not show the time.
+
 ---
 
 > This package has been created using TSDX
