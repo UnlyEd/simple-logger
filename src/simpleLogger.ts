@@ -1,15 +1,7 @@
+import { Console } from 'console';
 import noop from 'lodash.noop';
 
-export type SimpleLogger = {
-  debug: any;
-  error: any;
-  group: any;
-  groupEnd: any;
-  info: any;
-  log: any;
-  warn: any;
-};
-
+export type SimpleLogger = Console;
 export type PrintMode = 'debug' | 'error' | 'group' | 'groupEnd' | 'info' | 'log' | 'warn';
 
 export type SimpleLoggerOptions = {
