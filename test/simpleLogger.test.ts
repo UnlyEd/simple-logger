@@ -1,4 +1,4 @@
-import { createLogger } from '../src/simpleLogger';
+import createLogger from '../src';
 
 const originalLog = console.log;
 
