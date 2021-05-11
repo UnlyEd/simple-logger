@@ -109,8 +109,7 @@ If you want to define your config only once and reuse it everywhere across your 
 #### **`logger.ts`**
 
 ```ts
-import createSimpleLogger from '@unly/simple-logger';
-import { SimpleLogger } from '@unly/simple-logger/dist/simpleLogger';
+import createSimpleLogger, { SimpleLogger } from '@unly/simple-logger';
 
 /**
  * Custom logger proxy.
@@ -127,6 +126,7 @@ export const createLogger = ({ fileLabel }: { fileLabel: string }): SimpleLogger
     },
   });
 };
+
 ```
 
 #### **`someFile.ts`**
